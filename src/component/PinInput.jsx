@@ -1,16 +1,28 @@
-import React from 'react'
+import React, { forwardRef } from "react";
 
-const PinInput = ({maxLength, onChangeFunc}) => {
-  return (
-    <input
-            
-            
-              maxLength={maxLength}
-              onChange={onChangeFunc}
-              
-            />
-          
-  )
-}
+const PinInput = forwardRef(
+  ({ maxLength, onChangeFunc, backSpaceHandler }, ref) => {
 
-export default PinInput
+
+    const handleKeyUp = (e) => {
+      // console.log(e.keyCode);
+      if (e.keyCode === 8 && !e.target.value) {
+        backSpaceHandler(e);
+      } else {
+        onChangeFunc(e);
+      }
+    };
+
+    return (
+      <input
+      // className={correctOtp && 'greenColorInput'}
+        ref={ref}
+        maxLength={maxLength}
+        // onChange={onChangeFunc}
+        onKeyUp={handleKeyUp}
+      />
+    );
+  }
+);
+
+export default PinInput;
